@@ -10,7 +10,7 @@ from fastapi import Depends
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 import secrets
 import random
-
+import uvicorn
 client = pymongo.MongoClient("mongodb+srv://fa18c2bb038:Ma6IuqQ1n36twJCj@cluster0.am8x5h0.mongodb.net/?retryWrites=true&w=majority")
 
 db = client["auth"]
@@ -130,3 +130,4 @@ def create_user(user: User):
     user_dict["password"] = pwd_context.hash(user.password)
     user_id = users_collection.insert_one(user_dict).inserted_id
     return {"id": str(user_id)}
+uvicorn.run("main:app", host="0.0.0.0", port=8000)
